@@ -124,7 +124,7 @@
       <button type="button" class="button" commandfor="account-sheet" command="--open-sheet">Open account</button>
     </main>
 
-    <snap-sheet id="account-sheet" label="Account">
+    <snap-sheet id="account-sheet" label="Account" snap-points="peek:0.25,half:0.55" initial-snap="peek">
       <header class="sheet-header">
         <h2>Account</h2>
         <button type="button" commandfor="account-sheet" command="--close-sheet" aria-label="Close">&times;</button>
@@ -159,7 +159,7 @@
       </footer>
     </snap-sheet>
 
-    <snap-sheet id="details-sheet" label="Account details">
+    <snap-sheet id="details-sheet" label="Account details" snap-points="half:0.55" initial-snap="half">
       <header class="sheet-header">
         <h2>Account details</h2>
         <button type="button" commandfor="details-sheet" command="--close-sheet" aria-label="Close">&times;</button>

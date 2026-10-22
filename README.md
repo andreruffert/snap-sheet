@@ -1,4 +1,4 @@
-# <snap-sheet>
+# `<snap-sheet>`
 
 A lightweight, light-DOM web component for sheet interactions, built on native browser primitives instead of a JavaScript drag engine.
 
