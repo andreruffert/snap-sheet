@@ -71,7 +71,7 @@ snap-sheet {
     flex-direction: column;
     overflow: hidden;
     width: 100cqi;
-    height: fit-content;
+    height: max-content;
     max-height: var(--sheet-max-height);
     padding-bottom: env(safe-area-inset-bottom);
 
