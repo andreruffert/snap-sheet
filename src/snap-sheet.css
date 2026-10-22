@@ -1,0 +1,112 @@
+snap-sheet {
+  --sheet-background: Canvas;
+  --sheet-shadow: 0 -12px 48px rgb(0 0 0 / 0.16);
+  --sheet-radius: 1.6rem;
+  --sheet-backdrop-color: rgb(0 0 0 / 0.42);
+  --sheet-backdrop-animation: backdrop-in;
+  --sheet-max-height: 85dvh;
+
+  --sheet-animation: ;
+  --sheet-stack-animation: stack-peek;
+  --sheet-stack-offset: 1rem;
+  --sheet-stack-scale: 0.965;
+
+  &:is([open]) {
+    display: contents;
+  }
+
+  &:not([open]) {
+    display: none;
+  }
+
+  [data-part="dialog"]:is([open]) {
+    all: unset;
+    position: fixed;
+    inset: 0;
+
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+    scroll-timeline-axis: y;
+    scroll-behavior: smooth;
+
+    display: grid;
+    grid-template-rows: 100cqb auto;
+    container-type: size;
+  }
+
+  [data-part="dialog"]:not(:open) {
+    display: none;
+  }
+
+  [data-part="dialog"]::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-part="dialog"]:modal::backdrop {
+    background: var(--sheet-backdrop-color);
+
+    @supports (animation-timeline: scroll()) {
+      animation: var(--sheet-backdrop-animation) linear both;
+      animation-timeline: var(--sheet-progress-timeline, auto);
+    }
+  }
+
+  [data-part="sentinel"] {
+    /* ::backdrop light dismiss */
+    pointer-events: none;
+  }
+
+  [data-part="sentinel"],
+  [data-part="panel"] {
+    scroll-snap-align: start;
+  }
+
+  [data-part="panel"] {
+    background: var(--sheet-background);
+    border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+    box-shadow: var(--sheet-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100cqi;
+    height: fit-content;
+    max-height: var(--sheet-max-height);
+    padding-bottom: env(safe-area-inset-bottom);
+
+    @supports (animation-timeline: scroll()) {
+      animation: var(--sheet-animation) linear both;
+      animation-timeline: var(--sheet-progress-timeline);
+    }
+  }
+
+  &[data-stacked] [data-part="panel"] {
+    @supports (animation-timeline: scroll()) {
+      animation-name: var(--sheet-stack-animation);
+      animation-duration: 1ms;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-composition: accumulate;
+      animation-range: 0% 100%;
+    }
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes stack-peek {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(calc(-1 * var(--sheet-stack-offset))) scale(var(--sheet-stack-scale));
+  }
+}

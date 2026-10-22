@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>snap-sheet</title>
+
+    <style>
+      :root {
+        font:
+          16px / 1.5 system-ui,
+          sans-serif;
+        background: Canvas;
+        color: CanvasText;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 200dvh;
+        padding: 2rem;
+      }
+
+      main {
+        max-width: 680px;
+        margin: 10vh auto;
+      }
+
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .button {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.75rem 1.2rem;
+        color: white;
+        background: #315ce8;
+      }
+
+      .secondary {
+        color: #20232a;
+        background: #e7e9ef;
+      }
+
+      .muted {
+        color: #626773;
+      }
+
+      /* Demo content */
+
+      snap-sheet[data-stacked] [data-part="panel"] {
+        box-shadow: 0 -8px 32px rgb(0 0 0 / 0.1);
+      }
+
+      snap-sheet [data-part="panel"]::before {
+        content: "";
+        display: block;
+        width: 38px;
+        height: 5px;
+        margin: 12px auto 4px;
+        border-radius: 99px;
+        background: #c7c9d0;
+        flex-shrink: 0;
+      }
+
+      .sheet-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid #ececf0;
+
+        h2 {
+          margin: 0;
+          font-size: 1.15rem;
+        }
+
+        [command="--close-sheet"] {
+          display: grid;
+          place-items: center;
+          width: 40px;
+          height: 40px;
+          border: 0;
+          border-radius: 50%;
+          background: #f0f1f5;
+          font-size: 1.25rem;
+        }
+      }
+
+      .sheet-body {
+        padding: 1.25rem;
+        overflow: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+      }
+
+      .sheet-footer {
+        flex: none;
+        border-top: 1px solid #ececf0;
+        padding: 1rem 1.25rem;
+      }
+
+      .card {
+        background: #fff;
+        border: 1px solid #e2e4e9;
+        border-radius: 16px;
+        padding: 1.25rem;
+        margin-block: 1rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>Sheets on Sheets</h1>
+      <p class="muted">Stackable native dialogs, invoker commands, scroll-driven dismissal and cumulative animations.</p>
+
+      <button type="button" class="button" commandfor="account-sheet" command="--open-sheet">Open account</button>
+    </main>
+
+    <snap-sheet id="account-sheet" label="Account">
+      <header class="sheet-header">
+        <h2>Account</h2>
+        <button type="button" commandfor="account-sheet" command="--close-sheet" aria-label="Close">&times;</button>
+      </header>
+
+      <div class="sheet-body">
+        <p>Swipe down or scroll to the top to dismiss.</p>
+
+        <div class="card">
+          <h3>Profile</h3>
+          <p>Account information and preferences.</p>
+          <button type="button" class="button" commandfor="details-sheet" command="--open-sheet">Open details</button>
+        </div>
+
+        <div class="card">
+          <h3>More content</h3>
+          <p>Scroll inside the panel independently.</p>
+          <p>Content continues here.</p>
+          <p>And here.</p>
+        </div>
+
+        <div class="card">
+          <h3>More content</h3>
+          <p>Scroll inside the panel independently.</p>
+          <p>Content continues here.</p>
+          <p>And here.</p>
+        </div>
+      </div>
+
+      <footer class="sheet-footer">
+        <button type="button" class="button secondary" commandfor="account-sheet" command="--close-sheet">Done</button>
+      </footer>
+    </snap-sheet>
+
+    <snap-sheet id="details-sheet" label="Account details">
+      <header class="sheet-header">
+        <h2>Account details</h2>
+        <button type="button" commandfor="details-sheet" command="--close-sheet" aria-label="Close">&times;</button>
+      </header>
+
+      <div class="sheet-body">
+        <p>This sheet is stacked above Account. The underlying sheet responds to this sheet's scroll timeline.</p>
+
+        <div class="card">
+          <h3>Details</h3>
+          <p>The underlying sheet remains mounted.</p>
+          <button type="button" class="button" commandfor="preferences-sheet" command="--open-sheet">Open preferences</button>
+        </div>
+
+        <div class="card">
+          <h3>More content</h3>
+          <p>Scroll inside the panel independently.</p>
+          <p>Content continues here.</p>
+          <p>And here.</p>
+        </div>
+      </div>
+
+      <footer class="sheet-footer">
+        <button type="button" class="button secondary" commandfor="details" command="--close-sheet">Back</button>
+      </footer>
+    </snap-sheet>
+
+    <snap-sheet id="preferences-sheet" label="Preferences">
+      <header class="sheet-header">
+        <h2>Preferences</h2>
+        <button type="button" commandfor="preferences-sheet" command="--close-sheet" aria-label="Close">&times;</button>
+      </header>
+
+      <div class="sheet-body">
+        <p>The Account and Account details sheets both animate as this sheet opens.</p>
+
+        <div class="card">
+          <h3>General</h3>
+          <label>Display Name <input></label>
+        </div>
+
+        <div class="card">
+          <h3>Notifications</h3>
+          <p>Manage your notification preferences here.</p>
+        </div>
+      </div>
+
+      <footer class="sheet-footer">
+        <button type="button" class="button secondary" commandfor="preferences" command="--close-sheet">Back</button>
+      </footer>
+    </snap-sheet>
+
+    <script type="module">
+      if (!(typeof HTMLButtonElement !== 'undefined' && 'command' in HTMLButtonElement.prototype && 'source' in (globalThis.CommandEvent?.prototype || {}))) {
+        await import('https://cdn.jsdelivr.net/npm/invokers-polyfill@latest/+esm');
+      }
+
+      for (const type of ['sheet-open', 'sheet-close']) {
+        document.addEventListener(type, (event) => {
+          console.debug(`[snap-sheet] ${event.type}`, {
+            sheet: event.target,
+            ...event.detail,
+          });
+        });
+      }
+    </script>
+    <script type="module" src="/src/index.js"></script>
+  </body>
+</html>
