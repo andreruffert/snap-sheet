@@ -1,3 +1,5 @@
+import { parseSnapPoints } from './utils';
+
 const SUPPORTS_ANIMATION_TIMELINE = CSS.supports('animation-timeline: scroll()');
 
 const TEMPLATE = document.createElement('template');
@@ -5,9 +7,7 @@ const TEMPLATE = document.createElement('template');
 TEMPLATE.innerHTML = `
 <dialog data-part="dialog">
   <div data-part="sentinel" aria-hidden="true"></div>
-
     <section data-part="panel"></section>
-
 </dialog>
 `;
 
@@ -41,6 +41,7 @@ export class SnapSheet extends HTMLElement {
   #timelineName = `--sheet-progress-${++SnapSheet.#nextId}`;
   #listeners = null;
   #previousFocus = null;
+  #snapPoints = [];
 
   /** @type {SheetCloseReason | null} */
   #pendingCloseReason = null;
@@ -56,6 +57,7 @@ export class SnapSheet extends HTMLElement {
   connectedCallback() {
     this.#initializeDOM();
     this.#setupListeners();
+    this.#setupSnapPoints();
 
     if (this.hasAttribute('open')) {
       this.show();
@@ -116,6 +118,8 @@ export class SnapSheet extends HTMLElement {
   show(invoker = null) {
     if (!this.isConnected || this.open || SnapSheet.stack.includes(this)) return;
 
+    const initialSnap = this.querySelector(`[data-snap="${this.getAttribute('initial-snap')}"]`);
+
     this.#previousFocus = invoker || document.activeElement;
     this.#dialog.showModal();
 
@@ -124,7 +128,7 @@ export class SnapSheet extends HTMLElement {
 
     requestAnimationFrame(() => {
       if (!this.open || !this.isConnected) return;
-      this.#panel.scrollIntoView({ container: 'nearest' });
+      (initialSnap || this.#panel).scrollIntoView({ container: 'nearest' });
     });
 
     this.toggleAttribute('open', true);
@@ -192,6 +196,21 @@ export class SnapSheet extends HTMLElement {
     this.#dialog.addEventListener('click', this.#onDialogClick, options);
     this.#dialog.addEventListener('cancel', this.#onDialogCancel, options);
     this.#dialog.addEventListener('scrollend', this.#onScrollEnd, options);
+  }
+
+  #setupSnapPoints() {
+    this.#snapPoints = parseSnapPoints(this.getAttribute('snap-points'));
+
+    for (const point of this.#snapPoints) {
+      const element = document.createElement('div');
+
+      element.setAttribute('aria-hidden', 'true');
+      element.dataset.part = 'snap-point';
+      element.dataset.snap = point.name;
+      element.style.top = `${point.fraction * 100}cqb`;
+
+      this.#dialog.append(element);
+    }
   }
 
   // -----------------------------------------------------------------------------------------------

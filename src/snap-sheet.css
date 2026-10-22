@@ -59,7 +59,8 @@ snap-sheet {
   }
 
   [data-part="sentinel"],
-  [data-part="panel"] {
+  [data-part="panel"],
+  [data-part="snap-point"] {
     scroll-snap-align: start;
   }
 
@@ -90,6 +91,14 @@ snap-sheet {
       animation-composition: accumulate;
       animation-range: 0% 100%;
     }
+  }
+
+  [data-part="snap-point"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    scroll-snap-align: start;
+    pointer-events: none;
   }
 }
 
