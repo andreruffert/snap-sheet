@@ -1,6 +1,6 @@
 {
 	"name": "snap-sheet",
-  "description": "A light-DOM custom element for modal sheets with scroll-driven dismissal and stack-aware animations.",
+	"description": "A lightweight web component for sheet interactions, built on native browser primitives.",
 	"version": "0.0.0",
 	"type": "module",
 	"exports": {

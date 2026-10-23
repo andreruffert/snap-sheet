@@ -1,6 +1,6 @@
 # `<snap-sheet>`
 
-A lightweight, light-DOM web component for sheet interactions, built on native browser primitives instead of a JavaScript drag engine.
+A lightweight web component for sheet interactions, built on native browser primitives instead of a JavaScript drag engine.
 
 - Native modal sheets powered by `<dialog>`
 - Stacked-sheet coordination with stack-aware animations
