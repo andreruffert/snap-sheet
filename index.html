@@ -122,9 +122,21 @@
       <p class="muted">Stackable native dialogs, invoker commands, scroll-driven dismissal and cumulative animations.</p>
 
       <button type="button" class="button" commandfor="account-sheet" command="--open-sheet">Open account</button>
+
+      <br>
+      <br>
+      <article class="card">
+        <h2>Options</h2>
+
+        <section class="card">
+          <h3>Snap points</h3>
+          <p>Open at specific visible heights.</p>
+          <button type="button" class="button secondary" commandfor="peek-sheet" command="--open-sheet">Peek</button>
+        </section>
+      </article>
     </main>
 
-    <snap-sheet id="account-sheet" label="Account" snap-points="peek:0.25,half:0.55" initial-snap="peek">
+    <snap-sheet id="account-sheet" label="Account">
       <header class="sheet-header">
         <h2>Account</h2>
         <button type="button" commandfor="account-sheet" command="--close-sheet" aria-label="Close">&times;</button>
@@ -159,7 +171,7 @@
       </footer>
     </snap-sheet>
 
-    <snap-sheet id="details-sheet" label="Account details" snap-points="half:0.55" initial-snap="half">
+    <snap-sheet id="details-sheet" label="Account details">
       <header class="sheet-header">
         <h2>Account details</h2>
         <button type="button" commandfor="details-sheet" command="--close-sheet" aria-label="Close">&times;</button>
@@ -204,6 +216,28 @@
         <div class="card">
           <h3>Notifications</h3>
           <p>Manage your notification preferences here.</p>
+        </div>
+      </div>
+
+      <footer class="sheet-footer">
+        <button type="button" class="button secondary" commandfor="preferences-sheet" command="--close-sheet">Back</button>
+      </footer>
+    </snap-sheet>
+
+    <snap-sheet id="peek-sheet" label="Snap points"  snap-points="peek:0.25" initial-snap="peek">
+      <header class="sheet-header">
+        <h2>Peek sheet</h2>
+        <button type="button" commandfor="preferences-sheet" command="--close-sheet" aria-label="Close">&times;</button>
+      </header>
+
+      <div class="sheet-body">
+        <p>This sheet uses snap points.</p>
+
+        <div class="card">
+          <h3>More content</h3>
+          <p>Scroll inside the panel independently.</p>
+          <p>Content continues here.</p>
+          <p>And here.</p>
         </div>
       </div>
 
