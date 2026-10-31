@@ -18,7 +18,7 @@
 		"lint": "biome ci"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
+		"@biomejs/biome": "2.6.3",
 		"vite": "8.3.5"
 	},
 	"volta": {
